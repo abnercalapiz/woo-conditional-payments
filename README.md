@@ -157,4 +157,10 @@ This plugin is licensed under the GPL v2 or later.
 
 ## Credits
 
-Developed for WooCommerce stores that need flexible payment method management based on user roles.
+Developed by [Jezweb](https://www.jezweb.com.au/) for WooCommerce stores that need flexible payment method management based on user roles.
+
+## Developer
+
+**Jezweb**  
+Website: https://www.jezweb.com.au/  
+Specializing in WordPress and WooCommerce development
