@@ -19,6 +19,7 @@ Woo Conditional Payments gives you fine-grained control over which payment metho
 - **Guest User Support**: Include or exclude non-logged-in users
 - **Easy Configuration**: Integrated directly into WooCommerce payment settings
 - **Flexible Logic**: Combine "show to" and "hide from" rules for precise control
+- **Multi-Role Support**: Works correctly with users who have multiple roles (v1.0.1+)
 - **Lightweight**: Minimal performance impact
 - **Secure**: Built with WordPress security best practices
 
@@ -123,7 +124,7 @@ A: Yes, it works with all payment methods that properly integrate with WooCommer
 A: Yes, the plugin works on both single site and multisite installations.
 
 ### Q: How does it handle users with multiple roles?
-A: The plugin checks the user's primary role (first role in the array).
+A: As of version 1.0.1, the plugin checks ALL user roles. If a user has ANY of the allowed roles, they can see the payment method. If they have ANY of the restricted roles, the payment method will be hidden (hide rules take priority).
 
 ## Troubleshooting
 
@@ -139,7 +140,13 @@ A: The plugin checks the user's primary role (first role in the array).
 
 ## Changelog
 
-### Version 1.0.0
+### Version 1.0.1 (2025-11-25)
+- **Fixed**: Multi-role support - plugin now checks ALL user roles, not just the primary role
+- **Improved**: Payment methods shown if user has ANY allowed role
+- **Improved**: Payment methods hidden if user has ANY restricted role
+- Users with multiple roles are now properly supported
+
+### Version 1.0.0 (2025-11-25)
 - Initial release
 - Role-based payment method visibility
 - Hide from specific roles feature
