@@ -3,7 +3,7 @@
  * Plugin Name: Woo Conditional Payments
  * Plugin URI: https://www.jezweb.com.au/
  * Description: Control WooCommerce payment methods visibility based on user roles
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Jezweb
  * Author URI: https://www.jezweb.com.au/
  * License: GPL v2 or later
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants
-define( 'WCP_VERSION', '1.0.0' );
+define( 'WCP_VERSION', '1.0.1' );
 define( 'WCP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WCP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'WCP_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
@@ -205,7 +205,7 @@ class Woo_Conditional_Payments {
 			return $available_gateways;
 		}
 		
-		$current_user_role = $this->get_current_user_role();
+		$current_user_roles = $this->get_current_user_roles();
 		
 		foreach ( $available_gateways as $gateway_id => $gateway ) {
 			// Ensure gateway is an object and has the get_option method
@@ -229,14 +229,14 @@ class Woo_Conditional_Payments {
 			$visible_roles = array_map( 'sanitize_text_field', $visible_roles );
 			$hidden_roles = array_map( 'sanitize_text_field', $hidden_roles );
 			
-			// First check if user is in hidden roles (takes priority)
-			if ( ! empty( $hidden_roles ) && in_array( $current_user_role, $hidden_roles, true ) ) {
+			// First check if any of user's roles are in hidden roles (takes priority)
+			if ( ! empty( $hidden_roles ) && array_intersect( $current_user_roles, $hidden_roles ) ) {
 				unset( $available_gateways[ $gateway_id ] );
 				continue;
 			}
 			
 			// Then check visible roles (only if visible roles are set)
-			if ( ! empty( $visible_roles ) && ! in_array( $current_user_role, $visible_roles, true ) ) {
+			if ( ! empty( $visible_roles ) && ! array_intersect( $current_user_roles, $visible_roles ) ) {
 				unset( $available_gateways[ $gateway_id ] );
 			}
 		}
@@ -245,31 +245,31 @@ class Woo_Conditional_Payments {
 	}
 
 	/**
-	 * Get current user role
+	 * Get current user roles
 	 *
-	 * @return string
+	 * @return array
 	 */
-	private function get_current_user_role() {
+	private function get_current_user_roles() {
 		if ( ! is_user_logged_in() ) {
-			return 'guest';
+			return array( 'guest' );
 		}
 		
 		$current_user = wp_get_current_user();
 		
 		// Check if user object is valid
 		if ( ! $current_user || ! $current_user->exists() ) {
-			return 'guest';
+			return array( 'guest' );
 		}
 		
 		$roles = $current_user->roles;
 		
 		// Ensure roles is an array
 		if ( ! is_array( $roles ) || empty( $roles ) ) {
-			return 'guest';
+			return array( 'guest' );
 		}
 		
-		// Return the first role (primary role) without modifying the original array
-		return reset( $roles );
+		// Return all user roles
+		return $roles;
 	}
 }
 
