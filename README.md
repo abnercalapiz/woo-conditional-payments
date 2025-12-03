@@ -1,6 +1,6 @@
 # Woo Conditional Payments
 
-A WordPress plugin that allows you to control WooCommerce payment method visibility based on user roles.
+A WordPress plugin that allows you to control WooCommerce payment method visibility based on user roles and user-specific invoice payment settings.
 
 ## Description
 
@@ -15,6 +15,9 @@ Woo Conditional Payments gives you fine-grained control over which payment metho
 
 - **Role-Based Visibility**: Control which user roles can see each payment method
 - **Role-Based Hiding**: Hide payment methods from specific user roles
+- **User-Specific Invoice Payments**: Enable/disable invoice payment method per user (v1.0.2+)
+- **User List Filtering**: Filter users by invoice payment status (v1.0.2+)
+- **Bulk Actions**: Enable/disable invoice payments for multiple users at once (v1.0.2+)
 - **Default Visibility**: All payment methods are visible by default (no configuration required)
 - **Guest User Support**: Include or exclude non-logged-in users
 - **Easy Configuration**: Integrated directly into WooCommerce payment settings
@@ -38,6 +41,7 @@ Woo Conditional Payments gives you fine-grained control over which payment metho
 
 ## Configuration
 
+### Role-Based Configuration
 1. Go to **WooCommerce > Settings > Payments**
 2. Click on any payment method to edit its settings
 3. Configure visibility using these fields:
@@ -45,6 +49,15 @@ Woo Conditional Payments gives you fine-grained control over which payment metho
    - **"Hide from User Roles"**: Select roles that CANNOT see this payment method
 4. Leave fields empty to use default behavior (visible to all)
 5. Save changes
+
+### Invoice Payment Configuration (v1.0.2+)
+1. Go to **WooCommerce > Conditional Payments**
+2. Select your invoice payment gateway
+3. Set default state for new users
+4. Configure individual users:
+   - Edit user profile and check "Enable Pay by Invoice"
+   - Use bulk actions on Users list
+   - Filter users by invoice payment status
 
 ### Available Options
 
@@ -139,6 +152,20 @@ A: As of version 1.0.1, the plugin checks ALL user roles. If a user has ANY of t
 3. Verify no conflicts with other plugins
 
 ## Changelog
+
+### Version 1.0.2 (2025-12-03)
+- **New**: User-specific invoice payment settings
+- **New**: Enable/disable invoice payments per individual user
+- **New**: Filter users list by invoice payment status
+- **New**: Bulk enable/disable invoice payments for multiple users
+- **New**: Default invoice payment state for new users
+- **New**: Dedicated settings page under WooCommerce > Conditional Payments
+- **New**: Invoice payment status column in users list
+- **New**: AJAX toggle for invoice payment status in user list
+- **Improved**: User-specific settings override role-based settings for invoice payments
+- **Fixed**: Invoice payment gateway now properly respects user-specific settings
+- **Security**: Added proper nonce verification for user profile updates
+- **Security**: Added capability checks for bulk actions
 
 ### Version 1.0.1 (2025-11-25)
 - **Fixed**: Multi-role support - plugin now checks ALL user roles, not just the primary role
